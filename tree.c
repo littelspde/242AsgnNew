@@ -126,6 +126,7 @@ static tree tree_fix(tree t){
 
 tree tree_free(tree t){
 
+    free(root_node);
     if (t == NULL){
         return t;
     }else{

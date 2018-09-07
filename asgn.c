@@ -177,7 +177,7 @@ int main(int argc, char **argv){
         }
     }
 
-    if (flag_e == TRUE){
+    if (flag_e == TRUE && flag_T == FALSE){
         htable_print_entire_table(h, stderr);
     }
 
@@ -192,8 +192,14 @@ int main(int argc, char **argv){
         }
         
         while(getword(word, sizeof word, infile) != EOF){
-            found = htable_search(h, word);
-          
+
+            if(flag_T == TRUE){
+                found = tree_search(t, word);
+            }
+            else{
+                found = htable_search(h, word);
+            }
+            
             if (found == 0){
                 fprintf(stdout, "%s\n", word);
             }

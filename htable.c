@@ -40,7 +40,9 @@ void htable_free(htable h) {
     int i;
 
     for (i = 0; i < h->capacity; i++) {
-        free(h->keys[i]);
+        if (h->keys[i]){
+            free(h->keys[i]);
+        }
     }
     
     free(h->keys);
@@ -152,11 +154,12 @@ int htable_search(htable h, char *str) {
     unsigned int hash = index % h->capacity;
     unsigned int step = htable_step(h, hash);
 
-    
-    while (h->keys[hash] != NULL && compare(str, h->keys[hash]) != 0
+    while (h->keys[hash] != NULL &&
+           compare(str, h->keys[hash]) != 0
            && collisions != h->capacity) {
 
         hash += step;
+        hash %= h->capacity;
         collisions++;
     }
     
